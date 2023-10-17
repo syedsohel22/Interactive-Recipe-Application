@@ -13,14 +13,25 @@ import { Link as RouterLink } from "react-router-dom";
 const Navbar = () => {
   const [auth, setAuth] = useState(false);
   return (
-    <Box bg="#f5f6ea" color="black" py={2} >
+    <Box
+      bg="#f5f6ea"
+      color="black"
+      py={2}
+      boxShadow="base"
+      position={"fixed"}
+      zIndex={10}
+      top={0}
+      w={"100%"}
+    >
       <Flex
         justifyContent="space-between"
         alignItems="center"
         maxW="1200px"
         mx="auto"
       >
-        <Image src={Logo} alt="logo" w={20} />
+        <ChakraLink as={RouterLink} to="/">
+          <Image src={Logo} alt="logo" w={20} />
+        </ChakraLink>
 
         {auth ? (
           <>
@@ -36,7 +47,7 @@ const Navbar = () => {
 
               <ChakraLink
                 as={RouterLink}
-                to="/your-route"
+                to="/recipes"
                 fontWeight="bold"
                 mx={2}
                 _hover={{
