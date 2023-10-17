@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   Box,
   Flex,
-  Heading,
   Input,
   Button,
   Link as ChakraLink,
@@ -33,10 +32,13 @@ const Navbar = () => {
           <Image src={Logo} alt="logo" w={20} />
         </ChakraLink>
 
+        <Button onClick={() => setAuth(!auth)}>
+          {auth ? "Logout" : "Login"}
+        </Button>
         {auth ? (
           <>
             {" "}
-            <Flex mx={4}>
+            <Flex mx={20} align={"center"}>
               <Input
                 type="text"
                 placeholder="Search for recipes..."
@@ -57,9 +59,7 @@ const Navbar = () => {
                 Recipes
               </ChakraLink>
 
-              <Button colorScheme="#f5f6ea" size="sm" mx={2}>
-                Saved Recipes
-              </Button>
+              <Button>Saved</Button>
             </Flex>{" "}
           </>
         ) : (

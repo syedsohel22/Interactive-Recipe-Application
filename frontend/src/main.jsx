@@ -11,15 +11,16 @@ const theme = extendTheme({
   components: {
     Button: {
       baseStyle: {
-        borderRadius: 0,
+        borderRadius: "base",
       },
       variants: {
         solid: {
-          color: "white",
-          bg: "black",
+          color: "black",
+          bg: "#fad1ac",
+
           _hover: {
-            bg: "gray.200",
-            color: "black",
+            bg: "#fad1ac",
+            color: "#101036",
           },
         },
       },
