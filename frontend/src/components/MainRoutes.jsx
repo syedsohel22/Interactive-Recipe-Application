@@ -11,7 +11,7 @@ const MainRoutes = () => {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/registration" element={<Registration />} />
+      <Route path="/register" element={<Registration />} />
       <Route path="/recipes" element={<Recipes />} />
       <Route path="/single-recipe/:id" element={<SingleRecipe />} />
       <Route path="*" element={<PageNotFound />} />
