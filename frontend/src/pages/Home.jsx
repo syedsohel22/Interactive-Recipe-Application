@@ -9,7 +9,6 @@ const Home = () => {
       mt={"90px"}
       flexDir={"column"}
       w={"100%"}
-      maxW="1200px"
       mx="auto"
     >
       Home
