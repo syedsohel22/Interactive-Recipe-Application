@@ -14,7 +14,13 @@ const Loader = () => {
       alignItems="center"
     >
       <Center h="100vh" flexDir="column">
-        <Image src={laoderLogo} alt="Website Logo" boxSize="100px" mb="2" />
+        <Image
+          src={laoderLogo}
+          alt="Website Logo"
+          boxSize="100px"
+          mb="2"
+          loading={"lazy"}
+        />
         <Spinner
           thickness="10px"
           speed="0.65s"
