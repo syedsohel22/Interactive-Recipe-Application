@@ -1,15 +1,12 @@
 import {
   Box,
   Button,
-  ButtonGroup,
   Card,
   CardBody,
-  CardFooter,
   Heading,
   Image,
   SimpleGrid,
   Stack,
-  Text,
 } from "@chakra-ui/react";
 import CardItem from "../components/CardItem";
 import { useEffect, useState } from "react";
