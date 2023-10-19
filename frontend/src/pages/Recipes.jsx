@@ -12,13 +12,13 @@ import CardItem from "../components/CardItem";
 import { useEffect, useState } from "react";
 import { MdBookmarkBorder, MdBookmark } from "react-icons/md";
 import Loader from "../components/Loader";
-import URL from "../utils/url";
+import { URL, localURL } from "../utils/url";
 const Recipes = () => {
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
-    fetch(`${URL}`)
+    fetch(`${localURL}`)
       .then((res) => res.json())
       .then((res) => {
         setData(res.results);
@@ -30,6 +30,70 @@ const Recipes = () => {
         setLoading(false);
       });
   }, []);
+  const data = [
+    {
+      id: 662479,
+      title: "Sweet and Tart Lemon Bars",
+      image: "https://spoonacular.com/recipeImages/662479-312x231.jpg",
+      imageType: "jpg",
+    },
+    {
+      id: 662458,
+      title:
+        "Sweet and Spicy Blueberry Molasses Jam Cookies (Gluten Free Too!)",
+      image: "https://spoonacular.com/recipeImages/662458-312x231.jpg",
+      imageType: "jpg",
+    },
+    {
+      id: 1095688,
+      title: "Indian Sweet Jackfruit Dessert",
+      image: "https://spoonacular.com/recipeImages/1095688-312x231.jpg",
+      imageType: "jpg",
+    },
+    {
+      id: 641799,
+      title:
+        "Easter Nest Sweet Cake With Sour Cream-Royal Icing and Pistachios",
+      image: "https://spoonacular.com/recipeImages/641799-312x231.jpg",
+      imageType: "jpg",
+    },
+    {
+      id: 635513,
+      title: "Blueberry Pie With Sweet Almond Crust",
+      image: "https://spoonacular.com/recipeImages/635513-312x231.jpg",
+      imageType: "jpg",
+    },
+    {
+      id: 635039,
+      title: "Bittersweet Chocolate Gelato",
+      image: "https://spoonacular.com/recipeImages/635039-312x231.jpg",
+      imageType: "jpg",
+    },
+    {
+      id: 635041,
+      title: "Bittersweet chocolate pudding",
+      image: "https://spoonacular.com/recipeImages/635041-312x231.jpg",
+      imageType: "jpg",
+    },
+    {
+      id: 635043,
+      title: "Bittersweet Chocolate-Walnut Bundt Cake",
+      image: "https://spoonacular.com/recipeImages/635043-312x231.jpg",
+      imageType: "jpg",
+    },
+    {
+      id: 658975,
+      title: "SAFFRON INFUSED RICE PUDDING WITH SWEETENED WHOLE WHEAT PANCAKES",
+      image: "https://spoonacular.com/recipeImages/658975-312x231.jpg",
+      imageType: "jpg",
+    },
+    {
+      id: 641745,
+      title: "Dump Cake",
+      image: "https://spoonacular.com/recipeImages/641745-312x231.jpg",
+      imageType: "jpg",
+    },
+  ];
 
   console.log(data);
   return loading ? (
