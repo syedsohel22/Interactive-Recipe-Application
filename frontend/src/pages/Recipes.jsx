@@ -12,15 +12,16 @@ import CardItem from "../components/CardItem";
 import { useEffect, useState } from "react";
 import { MdBookmarkBorder, MdBookmark } from "react-icons/md";
 import Loader from "../components/Loader";
+import URL from "../utils/url";
 const Recipes = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:3001/recipes`)
+    fetch(`${URL}`)
       .then((res) => res.json())
       .then((res) => {
-        setData(res);
+        setData(res.results);
         console.log(res);
         setLoading(false);
       })
@@ -36,8 +37,8 @@ const Recipes = () => {
   ) : (
     <Box className="dot-bg" mt={"90px"}>
       <SimpleGrid columns={[2, null, 3]} gap="20px" placeItems={"center"}>
-        {data?.map((el, i) => (
-          <Card maxW="sm" key={i}>
+        {data?.map((el) => (
+          <Card maxW="sm" key={el.id}>
             <CardBody>
               <Image
                 src={el.image}
@@ -48,7 +49,14 @@ const Recipes = () => {
                 loading={"lazy"}
               />
               <Stack mt="6" spacing="3">
-                <Heading size="md">{el.title}</Heading>
+                <Heading
+                  size="md"
+                  whiteSpace="nowrap"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                >
+                  {el.title}
+                </Heading>
               </Stack>
             </CardBody>
             <Button
