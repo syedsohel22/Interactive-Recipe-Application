@@ -1,11 +1,7 @@
 const express = require("express");
-
+const test = require("../controllers/user.controller");
 const userRouter = express.Router();
 
-userRouter.get("/", (req, res) => {
-  res.json({
-    message: "welcome to Yummy recipes server..!",
-  });
-});
+userRouter.get("/", test);
 
 module.exports = userRouter;
