@@ -16,13 +16,20 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
+
   try {
-    const validUser = User.findOne({ email: email });
+    const validUser = await User.findOne({ email: email });
+
     if (!validUser) return next(errorHandler(404, "User not found"));
+
     const validPassword = bcryptjs.compareSync(password, validUser.password);
+
     if (!validPassword) return next(errorHandler(401, "wrong credentials"));
+
     const token = jwt.sign({ id: validUser._id }, process.env.SECRET_KEY);
+
     const { password: hashedPassword, ...rest } = validUser._doc;
+
     const expiryDate = new Date(Date.now() + 3600000);
     res
       .cookie("auth_token", token, { expires: expiryDate })

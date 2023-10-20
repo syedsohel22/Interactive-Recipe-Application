@@ -10,6 +10,7 @@ import {
   Button,
   Heading,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -32,7 +33,7 @@ export default function Login() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const toast = useToast();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -46,18 +47,42 @@ export default function Login() {
 
       const res = await fetch(`/api/v1/auth/login`, {
         method: "POST",
-        headers: { body: JSON.stringify(formData) },
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
 
       const data = await res.json();
       if (data.success == false) {
         dispatch(registerFailure());
+        toast({
+          title: "Error",
+          description: data.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
         return;
       }
       dispatch(registerSuccess(data));
       navigate("/");
+      toast({
+        title: "Success",
+        description: "Logged in successfully!",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
     } catch (error) {
       dispatch(registerFailure(error));
+      toast({
+        title: "Error",
+        description: "Network error. Please try again later.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
@@ -108,7 +133,7 @@ export default function Login() {
                 </InputGroup>
               </FormControl>
               <Stack spacing={10} pt={2}>
-                <Button loadingText="Submitting" size="lg">
+                <Button loadingText="Submitting" size="lg" type="submit">
                   Login
                 </Button>
               </Stack>
