@@ -21,6 +21,7 @@ import {
 } from "../reudx/authReducer/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -78,7 +79,7 @@ export default function Login() {
       dispatch(registerFailure(error));
       toast({
         title: "Error",
-        description: "Network error. Please try again later.",
+        description: `${error.message} Please try again later.`,
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -94,6 +95,7 @@ export default function Login() {
             Login
           </Heading>
         </Stack>
+        {loading ? <Loader /> : <></>}
         <Box
           rounded={"lg"}
           bg={useColorModeValue("white", "gray.700")}

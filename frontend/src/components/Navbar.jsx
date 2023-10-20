@@ -9,8 +9,10 @@ import {
 } from "@chakra-ui/react";
 import Logo from "../assets/yummy-recipes-logo.png";
 import { Link as RouterLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Navbar = () => {
   const [auth, setAuth] = useState(false);
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <Box
       bg="#f5f6ea"
@@ -32,10 +34,7 @@ const Navbar = () => {
           <Image src={Logo} alt="logo" w={20} />
         </ChakraLink>
 
-        <Button onClick={() => setAuth(!auth)}>
-          {auth ? "Logout" : "Login"}
-        </Button>
-        {auth ? (
+        {currentUser ? (
           <>
             {" "}
             <Flex mx={20} align={"center"}>
@@ -47,6 +46,12 @@ const Navbar = () => {
                 borderRadius="md"
               />
 
+              <Image
+                src={currentUser.profilePicture}
+                alt={currentUser.username}
+                w={10}
+                borderRadius={"50%"}
+              />
               <ChakraLink
                 as={RouterLink}
                 to="/recipes"
@@ -56,10 +61,8 @@ const Navbar = () => {
                   textDecoration: "underline",
                 }}
               >
-                Recipes
+                My Recipes
               </ChakraLink>
-
-              <Button>Saved</Button>
             </Flex>{" "}
           </>
         ) : (
