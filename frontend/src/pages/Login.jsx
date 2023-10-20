@@ -44,7 +44,7 @@ export default function Login() {
     console.log(formData);
     try {
       dispatch(registerStart());
-
+      //http://localhost:8000/api/v1/auth/login
       const res = await fetch(`/api/v1/auth/login`, {
         method: "POST",
         headers: {
