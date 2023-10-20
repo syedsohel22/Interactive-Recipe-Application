@@ -1,13 +1,14 @@
 const User = require("../models/user.model");
-
+const bcryptjs = require("bcryptjs");
 const register = async (req, res) => {
   const { username, email, password } = req.body;
-  const newUser = new User({ username, email, password });  
+  const hashedPassword = bcryptjs.hashSync(password, 10);
+  const newUser = new User({ username, email, password: hashedPassword });
   try {
     await newUser.save();
-    res.json({ status: "user is created succesfuly" });
+    res.status(201).json({ message: "User created successfully" });
   } catch (error) {
-    res.json({ error: error, message: error.message });
+    res.status(500).json(error.message);
   }
 };
 
