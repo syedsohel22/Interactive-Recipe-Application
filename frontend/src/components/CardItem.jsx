@@ -6,7 +6,7 @@ import {
   Image,
   Stack,
 } from "@chakra-ui/react";
-import { MdBookmarkBorder, MdBookmark } from "react-icons/md";
+import { MdBookmarkBorder,  } from "react-icons/md";
 const CardItem = () => {
   return (
     <Card maxW="sm">

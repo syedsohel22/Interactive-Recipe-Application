@@ -8,12 +8,12 @@ import {
   SimpleGrid,
   Stack,
 } from "@chakra-ui/react";
-import CardItem from "../components/CardItem";
+
 import { useEffect, useState } from "react";
-import { MdBookmarkBorder, MdBookmark } from "react-icons/md";
+import { MdBookmarkBorder } from "react-icons/md";
 import Loader from "../components/Loader";
 import { Link as RouterLink } from "react-router-dom";
-import { URL, localURL } from "../utils/url";
+import { localURL } from "../utils/url";
 const Recipes = () => {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -21,7 +21,7 @@ const Recipes = () => {
     fetch(`${localURL}`)
       .then((res) => res.json())
       .then((res) => {
-        setData(res.results);
+     
         console.log(res);
         setLoading(false);
       })

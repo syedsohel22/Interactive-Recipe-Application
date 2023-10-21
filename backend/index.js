@@ -7,12 +7,12 @@ const port = process.env.PORT || 8008;
 const cookieParser = require("cookie-parser");
 const { userRouter } = require("./routes/user.routes");
 const { authRouter } = require("./routes/auth.routes");
-const verifyToken = require("./utils/verifyUser");
 
 const path = require("path");
 /*******************************************************************************************************************/
-const app = express();
 const __dirname = path.resolve();
+const app = express();
+
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
 app.get("*", (req, res) => {

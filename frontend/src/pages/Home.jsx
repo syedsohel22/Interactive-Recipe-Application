@@ -7,17 +7,16 @@ import {
   Image,
   SimpleGrid,
   Stack,
-  Text,
+
 } from "@chakra-ui/react";
-import Loader from "../components/Loader";
-import { URL, localURL } from "../utils/url";
+
 import { useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 
 import { MdBookmarkBorder } from "react-icons/md";
 const Home = () => {
-  const { recipes, loading, error } = useSelector((state) => state.recipe);
-  const handleClick = async () => {};
+  const { recipes } = useSelector((state) => state.recipe);
+  
   console.log(recipes.recipes);
   const recipedata = recipes.recipes;
   return (

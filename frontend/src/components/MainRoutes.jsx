@@ -3,7 +3,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Registration from "../pages/Registration";
 import Recipes from "../pages/Recipes";
-import SingleRecipe from "../pages/singleRecipe";
+import SingleRecipe from "../pages/SingleRecipe";
 import PageNotFound from "../pages/PageNotFound";
 import PrivateRoute from "../components/PrivateRoute";
 
