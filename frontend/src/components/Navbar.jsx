@@ -8,14 +8,30 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  Icon,
+  IconButton,
+  Stack,
+  Select,
+  Divider,
 } from "@chakra-ui/react";
 import Logo from "../assets/yummy-recipes-logo.png";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../reudx/authReducer/userSlice";
+import { FcLike } from "react-icons/fc";
+import { SearchIcon } from "@chakra-ui/icons";
+import { URL } from "../utils/url";
+import { useState } from "react";
+import {
+  recipeFailure,
+  recipeSuccess,
+  recipeStart,
+} from "../reudx/recipeReducer/recipeSlice";
+const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
 const Navbar = () => {
+  const [search, setSearch] = useState("");
   const { currentUser } = useSelector((state) => state.user);
-  console.log("currentUser", currentUser);
+
   const dispatch = useDispatch();
   const handleLogOut = async () => {
     try {
@@ -26,6 +42,30 @@ const Navbar = () => {
     }
   };
 
+  const handleSearch = async () => {
+    try {
+      dispatch(recipeStart());
+      const res = await fetch(
+        `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&query=${search}}&number=6`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await res.json();
+      console.log("data", data, apiKey);
+      if (data.success == false) {
+        dispatch(recipeFailure(data.message));
+      }
+
+      dispatch(recipeSuccess(data));
+    } catch (error) {
+      console.log(error);
+      dispatch(recipeFailure(error));
+    }
+  };
+  console.log(search);
   return (
     <Box
       bg="#f5f6ea"
@@ -49,60 +89,60 @@ const Navbar = () => {
 
         {currentUser ? (
           <>
-            {" "}
-            <Flex mx={20} align={"center"}>
-              <Input
-                type="text"
-                placeholder="Search for recipes..."
-                size="sm"
-                bg="white"
-                borderRadius="md"
-              />
-              <Menu>
-                <MenuButton>
-                  <Image
-                    src={currentUser.profilePicture}
-                    alt={currentUser.username}
-                    w={65}
-                    borderRadius={"50%"}
+            <Stack>
+              <Flex mx={20} align={"center"} gap={5}>
+                <Flex>
+                  <Input
+                    type="text"
+                    placeholder="Search for recipes..."
+                    size="md"
+                    bg="white"
+                    borderRadius="md"
+                    onChange={(e) => setSearch(e.target.value)}
                   />
-                </MenuButton>
-                <MenuList>
-                  <MenuItem>Profile</MenuItem>
-                  <MenuItem bg={"red"} color={"white"} onClick={handleLogOut}>
-                    Logout
-                  </MenuItem>
-                </MenuList>
-              </Menu>
+                  <IconButton
+                    aria-label="search"
+                    icon={<SearchIcon />}
+                    onClick={handleSearch}
+                  />
+                </Flex>
+                <Menu>
+                  <MenuButton>
+                    <Image
+                      src={currentUser.profilePicture}
+                      alt={currentUser.username}
+                      w={50}
+                      borderRadius={"50%"}
+                    />
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem>Profile</MenuItem>
+                    <MenuItem bg={"red"} color={"white"} onClick={handleLogOut}>
+                      Logout
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
 
-              <ChakraLink
-                as={RouterLink}
-                to="/recipes"
-                fontWeight="bold"
-                mx={2}
-                _hover={{
-                  textDecoration: "underline",
-                }}
-              >
-                My Recipes
-              </ChakraLink>
-            </Flex>{" "}
+                <IconButton
+                  colorScheme="red"
+                  aria-label="Like"
+                  as={RouterLink}
+                  to="/recipes"
+                  fontWeight="bold"
+                  icon={<FcLike />}
+                />
+              </Flex>
+              <Divider />
+              <Flex size={"sm"}>
+                <Select variant="unstyled" placeholder="Sort" />
+                <Box>filter</Box>
+                <Box>Sort</Box>
+              </Flex>
+            </Stack>
           </>
         ) : (
           <>
             <Box>
-              <ChakraLink
-                as={RouterLink}
-                to="/login"
-                fontWeight="bold"
-                mx={2}
-                _hover={{
-                  textDecoration: "underline",
-                }}
-              >
-                Login
-              </ChakraLink>
-
               <ChakraLink
                 as={RouterLink}
                 to="/register"

@@ -12,6 +12,7 @@ import CardItem from "../components/CardItem";
 import { useEffect, useState } from "react";
 import { MdBookmarkBorder, MdBookmark } from "react-icons/md";
 import Loader from "../components/Loader";
+import { Link as RouterLink } from "react-router-dom";
 import { URL, localURL } from "../utils/url";
 const Recipes = () => {
   // const [data, setData] = useState([]);
@@ -102,42 +103,44 @@ const Recipes = () => {
     <Box className="dot-bg" mt={"90px"}>
       <SimpleGrid columns={[2, null, 3]} gap="20px" placeItems={"center"}>
         {data?.map((el) => (
-          <Card maxW="sm" key={el.id}>
-            <CardBody>
-              <Image
-                src={el.image}
-                alt={el.title}
-                w={"100%"}
-                boxSize="100%"
-                objectFit="contain"
-                loading={"lazy"}
-              />
-              <Stack mt="6" spacing="3">
-                <Heading
-                  size="md"
-                  whiteSpace="nowrap"
-                  overflow="hidden"
-                  textOverflow="ellipsis"
-                >
-                  {el.title}
-                </Heading>
-              </Stack>
-            </CardBody>
-            <Button
-              leftIcon={<MdBookmarkBorder />}
-              colorScheme="red"
-              variant="outline"
-              borderRadius="full"
-              position={"absolute"}
-              top={0}
-              left={0}
-              m={10}
-              bg={"red"}
-              color={"white"}
-            >
-              Like
-            </Button>
-          </Card>
+          <RouterLink to={`/detail-recipe/${el.id}`} key={el.id}>
+            <Card maxW="sm">
+              <CardBody>
+                <Image
+                  src={el.image}
+                  alt={el.title}
+                  w={"100%"}
+                  boxSize="100%"
+                  objectFit="contain"
+                  loading={"lazy"}
+                />
+                <Stack mt="6" spacing="3">
+                  <Heading
+                    size="md"
+                    whiteSpace="nowrap"
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                  >
+                    {el.title}
+                  </Heading>
+                </Stack>
+              </CardBody>
+              <Button
+                leftIcon={<MdBookmarkBorder />}
+                colorScheme="red"
+                variant="outline"
+                borderRadius="full"
+                position={"absolute"}
+                top={0}
+                left={0}
+                m={10}
+                bg={"red"}
+                color={"white"}
+              >
+                Like
+              </Button>
+            </Card>
+          </RouterLink>
         ))}
         <CardItem />
       </SimpleGrid>
