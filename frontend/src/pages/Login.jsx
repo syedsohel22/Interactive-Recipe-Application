@@ -20,7 +20,7 @@ import {
   loginSuccess,
 } from "../reudx/authReducer/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import OAuth from "../components/OAuth";
 
@@ -31,7 +31,7 @@ export default function Login() {
     password: "",
   });
 
-  const { loading, error } = useSelector((state) => state.user);
+  const { loading } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
