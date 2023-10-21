@@ -10,7 +10,7 @@ const { authRouter } = require("./routes/auth.routes");
 
 const path = require("path");
 /*******************************************************************************************************************/
-const __dirname = path.resolve();
+// const __dirname = path.resolve();
 const app = express();
 
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
