@@ -10,16 +10,20 @@ const SingleRecipe = () => {
   console.log(id);
 
   useEffect(() => {
-    fetch(
-      `https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}&includeNutrition=true`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => setRecipe(data));
+    try {
+      fetch(
+        `https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}&includeNutrition=true`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => setRecipe(data));
+    } catch (error) {
+      console.log(error);
+    }
   }, [id]);
   console.log(recipe);
   const parseTextWithNewLines = (text) => {

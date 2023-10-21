@@ -13,7 +13,7 @@ import Loader from "../components/Loader";
 import { URL, localURL } from "../utils/url";
 import { useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
-import CardItem from "../components/CardItem";
+
 import { MdBookmarkBorder } from "react-icons/md";
 const Home = () => {
   const { recipes, loading, error } = useSelector((state) => state.recipe);
@@ -71,7 +71,6 @@ const Home = () => {
               </Card>
             </RouterLink>
           ))}
-        <CardItem />
       </SimpleGrid>
     </Box>
   );
