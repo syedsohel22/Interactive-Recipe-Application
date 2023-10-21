@@ -15,7 +15,6 @@ import Loader from "../components/Loader";
 import { Link as RouterLink } from "react-router-dom";
 import { URL, localURL } from "../utils/url";
 const Recipes = () => {
-  // const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
@@ -142,7 +141,6 @@ const Recipes = () => {
             </Card>
           </RouterLink>
         ))}
-        <CardItem />
       </SimpleGrid>
     </Box>
   );
