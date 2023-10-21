@@ -19,6 +19,7 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { Link as ReactRouterLink, useNavigate } from "react-router-dom";
 import { Link as ChakraLink } from "@chakra-ui/react";
 import Loader from "./../components/Loader";
+import OAuth from "../components/OAuth";
 const initialState = {
   username: "",
   email: "",
@@ -151,6 +152,7 @@ export default function Registration() {
                   Register
                 </Button>
                 {loading ? <Loader /> : <></>}
+                <OAuth />
               </Stack>
               <Stack pt={6}>
                 <Text align={"center"}>

@@ -22,6 +22,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
+import OAuth from "../components/OAuth";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -138,6 +139,7 @@ export default function Login() {
                 <Button loadingText="Submitting" size="lg" type="submit">
                   Login
                 </Button>
+                <OAuth />
               </Stack>
             </Stack>
           </form>
