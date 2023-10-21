@@ -7,12 +7,12 @@ const port = process.env.PORT || 8008;
 const cookieParser = require("cookie-parser");
 const { userRouter } = require("./routes/user.routes");
 const { authRouter } = require("./routes/auth.routes");
-const verifyToken = require("./utils/verifyUser");
 
 const path = require("path");
 /*******************************************************************************************************************/
+// const __dirname = path.resolve();
 const app = express();
-const __dirname = path.resolve();
+
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
 app.get("*", (req, res) => {
@@ -37,6 +37,7 @@ app.use((err, req, res, next) => {
   });
 });
 /*******************************************************************************************************************/
+
 app.listen(port, async () => {
   try {
     await connection;

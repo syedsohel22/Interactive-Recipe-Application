@@ -36,20 +36,20 @@ const SingleRecipe = () => {
     ));
   };
 
-  const NutritionInfo = ({ nutrition }) => {
-    return (
-      <div>
-        <h2>Nutrition Information</h2>
-        <ul>
-          {Object.keys(nutrition).map((key) => (
-            <li key={key}>
-              <strong>{key}:</strong> {nutrition[key]}
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  };
+  // const NutritionInfo = ({ nutrition }) => {
+  //   return (
+  //     <div>
+  //       <h2>Nutrition Information</h2>
+  //       <ul>
+  //         {Object.keys(nutrition).map((key) => (
+  //           <li key={key}>
+  //             <strong>{key}:</strong> {nutrition[key]}
+  //           </li>
+  //         ))}
+  //       </ul>
+  //     </div>
+  //   );
+  // };
   return (
     <Flex
       className="dot-bg"
@@ -74,7 +74,7 @@ const SingleRecipe = () => {
             summary
           </Heading>
           <Text> {parse(recipe.summary)}</Text>
-          <Box>{NutritionInfo(recipe.nutrition)}</Box>
+          {/* <Box>{NutritionInfo(recipe.nutrition)}</Box> */}
         </Box>
       ) : (
         <Loader />

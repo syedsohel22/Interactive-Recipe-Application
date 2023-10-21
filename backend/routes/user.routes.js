@@ -1,5 +1,10 @@
 const express = require("express");
-const { test, testcon } = require("../controllers/user.controller");
+const {
+  test,
+  testcon,
+  savedRecipe,
+  unsavedRecipe,
+} = require("../controllers/user.controller");
 const verifyToken = require("../utils/verifyUser");
 
 const userRouter = express.Router();

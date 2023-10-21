@@ -8,7 +8,7 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  Icon,
+ 
   IconButton,
   Stack,
   Select,
@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../reudx/authReducer/userSlice";
 import { FcLike } from "react-icons/fc";
 import { SearchIcon } from "@chakra-ui/icons";
-import { URL } from "../utils/url";
+
 import { useState } from "react";
 import {
   recipeFailure,
