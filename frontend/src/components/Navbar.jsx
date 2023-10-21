@@ -6,13 +6,27 @@ import {
   Button,
   Link as ChakraLink,
   Image,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from "@chakra-ui/react";
 import Logo from "../assets/yummy-recipes-logo.png";
 import { Link as RouterLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../reudx/authReducer/userSlice";
 const Navbar = () => {
-  const [auth, setAuth] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const handleLogOut = async () => {
+    try {
+      await fetch("/api/v1/auth/logout");
+      dispatch(logOut());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Box
       bg="#f5f6ea"
@@ -45,13 +59,23 @@ const Navbar = () => {
                 bg="white"
                 borderRadius="md"
               />
+              <Menu>
+                <MenuButton>
+                  <Image
+                    src={currentUser.profilePicture}
+                    alt={currentUser.username}
+                    w={65}
+                    borderRadius={"50%"}
+                  />
+                </MenuButton>
+                <MenuList>
+                  <MenuItem>Profile</MenuItem>
+                  <MenuItem bg={"red"} color={"white"} onClick={handleLogOut}>
+                    Logout
+                  </MenuItem>
+                </MenuList>
+              </Menu>
 
-              <Image
-                src={currentUser.profilePicture}
-                alt={currentUser.username}
-                w={10}
-                borderRadius={"50%"}
-              />
               <ChakraLink
                 as={RouterLink}
                 to="/recipes"

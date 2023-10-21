@@ -40,4 +40,8 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { register, login };
+const logout = (req, res) => {
+  res.clearCookie("auth_token").status(200).json("logout success..!");
+};
+
+module.exports = { register, login, logout };

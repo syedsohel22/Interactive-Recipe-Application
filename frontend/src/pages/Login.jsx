@@ -15,9 +15,9 @@ import {
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
-  registerStart,
-  registerFailure,
-  registerSuccess,
+  loginStart,
+  loginFailure,
+  loginSuccess,
 } from "../reudx/authReducer/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -44,7 +44,7 @@ export default function Login() {
     e.preventDefault();
     console.log(formData);
     try {
-      dispatch(registerStart());
+      dispatch(loginStart());
       //http://localhost:8000/api/v1/auth/login
       const res = await fetch(`/api/v1/auth/login`, {
         method: "POST",
@@ -56,7 +56,7 @@ export default function Login() {
 
       const data = await res.json();
       if (data.success == false) {
-        dispatch(registerFailure());
+        dispatch(loginFailure());
         toast({
           title: "Error",
           description: data.message,
@@ -66,7 +66,7 @@ export default function Login() {
         });
         return;
       }
-      dispatch(registerSuccess(data));
+      dispatch(loginSuccess(data));
       navigate("/");
       toast({
         title: "Success",
@@ -76,7 +76,7 @@ export default function Login() {
         isClosable: true,
       });
     } catch (error) {
-      dispatch(registerFailure(error));
+      dispatch(loginFailure(error));
       toast({
         title: "Error",
         description: `${error.message} Please try again later.`,
