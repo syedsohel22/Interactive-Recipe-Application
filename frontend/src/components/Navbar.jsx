@@ -1,9 +1,7 @@
-import { useState } from "react";
 import {
   Box,
   Flex,
   Input,
-  Button,
   Link as ChakraLink,
   Image,
   Menu,
@@ -17,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../reudx/authReducer/userSlice";
 const Navbar = () => {
   const { currentUser } = useSelector((state) => state.user);
+  console.log("currentUser", currentUser);
   const dispatch = useDispatch();
   const handleLogOut = async () => {
     try {
