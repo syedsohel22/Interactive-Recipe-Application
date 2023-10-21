@@ -1,0 +1,5 @@
+MONGO // add your mongoDB URL here
+PORT // add your port here
+SECRET_KEY // add your secret key here for Json web tokens
+
+please add these three environment variables to work in local environments
