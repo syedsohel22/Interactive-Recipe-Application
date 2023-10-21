@@ -12,29 +12,80 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { Link as ReactRouterLink } from "react-router-dom";
+import { Link as ReactRouterLink, useNavigate } from "react-router-dom";
 import { Link as ChakraLink } from "@chakra-ui/react";
+import Loader from "./../components/Loader";
+import OAuth from "../components/OAuth";
 const initialState = {
-  firstName: "",
-  lastName: "",
+  username: "",
   email: "",
   password: "",
 };
 export default function Registration() {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState(initialState);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+  const toast = useToast();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
+    try {
+      setLoading(true);
+      setError(false);
+      //http://localhost:8000/api/v1/auth/register
+      const res = await fetch("api/v1/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(data);
+      setLoading(false);
+      if (data.success === false) {
+        setError(true);
+        toast({
+          title: "Error",
+          description: data.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+        return;
+      }
+
+      toast({
+        title: "Success",
+        description: "Registration successful!",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+      navigate("/login");
+    } catch (error) {
+      setLoading(false);
+      setError(true);
+      toast({
+        title: "Error",
+        description: "Network error. Please try again later.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
   return (
     <Flex align={"center"} justify={"center"} className="dot-bg" mt={"90px"}>
@@ -52,30 +103,18 @@ export default function Registration() {
         >
           <form onSubmit={handleSubmit}>
             <Stack spacing={4}>
-              <HStack>
-                <Box>
-                  <FormControl id="firstName" isRequired>
-                    <FormLabel>First Name</FormLabel>
-                    <Input
-                      type="text"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleInputChange}
-                    />
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="lastName">
-                    <FormLabel>Last Name</FormLabel>
-                    <Input
-                      type="text"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleInputChange}
-                    />
-                  </FormControl>
-                </Box>
-              </HStack>
+              <Box>
+                <FormControl id="username" isRequired>
+                  <FormLabel>username</FormLabel>
+                  <Input
+                    type="text"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleInputChange}
+                  />
+                </FormControl>
+              </Box>
+
               <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
                 <Input
@@ -110,8 +149,10 @@ export default function Registration() {
 
               <Stack spacing={10} pt={2}>
                 <Button loadingText="Submitting" size="lg" type="submit">
-                  Sign up
+                  Register
                 </Button>
+                {loading ? <Loader /> : <></>}
+                <OAuth />
               </Stack>
               <Stack pt={6}>
                 <Text align={"center"}>

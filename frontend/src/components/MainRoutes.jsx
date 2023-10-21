@@ -5,6 +5,7 @@ import Registration from "../pages/Registration";
 import Recipes from "../pages/Recipes";
 import SingleRecipe from "../pages/singleRecipe";
 import PageNotFound from "../pages/PageNotFound";
+import PrivateRoute from "../components/PrivateRoute";
 
 const MainRoutes = () => {
   return (
@@ -12,8 +13,11 @@ const MainRoutes = () => {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Registration />} />
-      <Route path="/recipes" element={<Recipes />} />
-      <Route path="/single-recipe/:id" element={<SingleRecipe />} />
+      <Route element={<PrivateRoute />}>
+        <Route path="/recipes" element={<Recipes />} />
+      </Route>
+      <Route path="/detail-recipe/:id" element={<SingleRecipe />} />
+
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

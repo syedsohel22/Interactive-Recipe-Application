@@ -10,9 +10,19 @@ import {
   Button,
   Heading,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import {
+  loginStart,
+  loginFailure,
+  loginSuccess,
+} from "../reudx/authReducer/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
+import OAuth from "../components/OAuth";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,13 +31,61 @@ export default function Login() {
     password: "",
   });
 
+  const { loading } = useSelector((state) => state.user);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const toast = useToast();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     console.log(formData);
+    try {
+      dispatch(loginStart());
+      //http://localhost:8000/api/v1/auth/login
+      const res = await fetch(`/api/v1/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      if (data.success == false) {
+        dispatch(loginFailure());
+        toast({
+          title: "Error",
+          description: data.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+        return;
+      }
+      dispatch(loginSuccess(data));
+      navigate("/");
+      toast({
+        title: "Success",
+        description: "Logged in successfully!",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (error) {
+      dispatch(loginFailure(error));
+      toast({
+        title: "Error",
+        description: `${error.message} Please try again later.`,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
@@ -38,49 +96,53 @@ export default function Login() {
             Login
           </Heading>
         </Stack>
+        {loading ? <Loader /> : <></>}
         <Box
           rounded={"lg"}
           bg={useColorModeValue("white", "gray.700")}
           boxShadow={"lg"}
           p={8}
         >
-          <Stack spacing={4}>
-            <FormControl id="email" isRequired>
-              <FormLabel>Email address</FormLabel>
-              <Input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-              />
-            </FormControl>
-            <FormControl id="password" isRequired>
-              <FormLabel>Password</FormLabel>
-              <InputGroup>
+          <form onSubmit={handleSubmit}>
+            <Stack spacing={4}>
+              <FormControl id="email" isRequired>
+                <FormLabel>Email address</FormLabel>
                 <Input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  value={formData.password}
+                  type="email"
+                  name="email"
+                  value={formData.email}
                   onChange={handleInputChange}
                 />
-                <InputRightElement h={"full"}>
-                  <Button
-                    variant={"ghost"}
-                    onClick={() =>
-                      setShowPassword((showPassword) => !showPassword)
-                    }
-                  >
-                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-            <Stack spacing={10} pt={2}>
-              <Button loadingText="Submitting" size="lg" onClick={handleSubmit}>
-                Login
-              </Button>
+              </FormControl>
+              <FormControl id="password" isRequired>
+                <FormLabel>Password</FormLabel>
+                <InputGroup>
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                  />
+                  <InputRightElement h={"full"}>
+                    <Button
+                      variant={"ghost"}
+                      onClick={() =>
+                        setShowPassword((showPassword) => !showPassword)
+                      }
+                    >
+                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+              <Stack spacing={10} pt={2}>
+                <Button loadingText="Submitting" size="lg" type="submit">
+                  Login
+                </Button>
+                <OAuth />
+              </Stack>
             </Stack>
-          </Stack>
+          </form>
         </Box>
       </Stack>
     </Flex>
