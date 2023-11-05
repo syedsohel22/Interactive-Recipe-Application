@@ -26,6 +26,10 @@ app.use(cookieParser());
 app.use("/api/v1/users", userRouter);
 
 app.use("/api/v1/auth", authRouter);
+// testing
+app.get("/api/test", (req, res) => {
+  res.send({ message: "I am working" });
+});
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
