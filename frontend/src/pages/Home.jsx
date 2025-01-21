@@ -7,7 +7,6 @@ import {
   Image,
   SimpleGrid,
   Stack,
-
 } from "@chakra-ui/react";
 
 import { useSelector } from "react-redux";
@@ -16,7 +15,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { MdBookmarkBorder } from "react-icons/md";
 const Home = () => {
   const { recipes } = useSelector((state) => state.recipe);
-  
+
   console.log(recipes.recipes);
   const recipedata = recipes.recipes;
   return (
